@@ -1,0 +1,26 @@
+def karatsuba(x, y):
+    x_str = str(x)
+    y_str = str(y)
+    if len(x_str) != len(y_str):
+        # Pad the smaller number with leading zeros
+        m = max(len(x_str), len(y_str))
+        x_str = x_str.zfill(m)
+        y_str = y_str.zfill(m)
+
+    n = max(len(x_str), len(y_str))
+    n_2 = n // 2
+
+    if n == 1:
+        return x*y
+    else:
+        a = x // 10 ** (n_2)
+        b = x % 10 ** (n_2)
+        c = y // 10 ** (n_2)
+        d = y % 10 ** (n_2)
+        ac = karatsuba(a, c)
+        bd = karatsuba(b, d)
+        ad_bc = karatsuba(a+b, c+d) - ac - bd
+        prod = ac * 10 ** (2 * n_2) + ad_bc * 10 ** n_2 + bd
+        # print("a={}, b={}, c={}, d={}, ac={}, bd={}, ad_bc={}".format(a, b, c, d, ac, bd, ad_bc))
+
+        return prod
